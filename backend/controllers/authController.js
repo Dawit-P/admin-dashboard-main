@@ -2,6 +2,31 @@ import User from "../models/User.js";
 import AppError from "../utils/appError.js";
 import { signToken } from "../utils/authHelpers.js";
 import bcrypt from "bcryptjs";
+export const createSuperAdmin = async (req, res, next) => {
+  try {
+    // Check if a Super Admin already exists
+    const existingSuperAdmin = await Admin.findOne({ role: "super-admin" });
+    if (existingSuperAdmin) {
+      return res.status(400).json({ status: "fail", message: "Super Admin already exists" });
+    }
+
+    // Create the Super Admin
+    const superAdmin = await Admin.create({
+      name: "Super Admin",
+      email: "superadmin@example.com", // Replace with desired email
+      password: "SuperSecurePassword123", // Replace with a secure password
+      role: "super-admin",
+    });
+
+    res.status(201).json({
+      status: "success",
+      message: "Super Admin created successfully",
+      data: { superAdmin },
+    });
+  } catch (err) {
+    next(new AppError("Error creating Super Admin", 500));
+  }
+};
 
 
 export const createFirstAdmin = async (req, res, next) => {

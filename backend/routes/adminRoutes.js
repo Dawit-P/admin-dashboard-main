@@ -109,6 +109,7 @@ router.get("/approved-requests", protectAdmin, restrictToAdmin("partnership-divi
 router.get("/disapproved-requests", protectAdmin, restrictToAdmin("law-department"), getDisapprovedRequestsForLawDepartment);
 
 // Get all requests reviewed by partnership division (regardless of current stage)
+router.get("/all-admins", protectAdmin, restrictToAdmin("super-admin"), getAllAdmins); // Example route
 router.get(
   "/partnership-reviewed",
   protectAdmin,

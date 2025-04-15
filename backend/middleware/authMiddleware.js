@@ -5,6 +5,14 @@ import { promisify } from "util";
 import AppError from "../utils/appError.js";
 import Admin from "../models/Admin.js";
 import User from "../models/User.js";
+import express from "express";
+import { createSuperAdmin } from "../controllers/authController.js";
+
+const router = express.Router();
+
+router.post("/create-super-admin", createSuperAdmin); // Add this route
+
+export default router;
 
 export const protect = catchAsync(async (req, res, next) => {
   let token;
